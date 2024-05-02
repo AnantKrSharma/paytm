@@ -1,4 +1,3 @@
-module.exports = {
-    JWT_SECRET: "PayTM_AKS"
-}
+const JWT_PASS = "PayTM_69AKS"
 
+module.exports = JWT_PASS
