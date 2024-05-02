@@ -5,9 +5,10 @@ const app = express();
 app.use(express.json());
 
 app.get('/signup', async (req, res)=>{
+    
     await Users.create(
         {
-            username: "Anant",
+            username: "  AN  ",
             firstName: "A",
             lastName: "K",
             password: "69420"
