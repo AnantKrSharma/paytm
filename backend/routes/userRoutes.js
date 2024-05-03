@@ -8,6 +8,7 @@ const { Users } = require('../database/db');
 const JWT_PASS = require('../config');
 const authMiddleware = require('../middlewares/auth')
 
+
 //zod sign-up schema
 const signupSchema = z.object({
     username: z.string().email(),
@@ -15,7 +16,6 @@ const signupSchema = z.object({
     lastName: z.string(),
     password: z.string()
 })
-
 
 router.post('/signup', async (req, res)=>{
     const validateSignup = signupSchema.safeParse(req.body)
@@ -36,22 +36,24 @@ router.post('/signup', async (req, res)=>{
         })
     }
 
-    Users.create(req.body).then((created)=>{  
-        const userId = created._id
-        const token = jwt.sign({
-            userId
-        }, jwtPass)
-        
-        res.status(200).json({
-            msg: "User created succesfully",
-            token
+    Users.create(req.body)
+        .then((created)=>{  
+            const token = jwt.sign({
+                userID: created._id
+            }, jwtPass)
+            
+            res.status(200).json({
+                msg: "User created succesfully",
+                token
+            })
         })
-    }).catch(()=>{
-        res.status(411).json({
-            msg: "Document error occured."
+        .catch(()=>{
+            res.status(411).json({
+                msg: "Document error occured."
+            })
         })
-    })
 })
+
 
 //zod sign-in schema
 const signinSchema = z.object({
@@ -59,45 +61,63 @@ const signinSchema = z.object({
     password: z.string()
 })
 
-
 router.post('/signin', async (req, res)=>{
-
-    const { success } = signinSchema.safeParse(req.body)
+    const {success} = signinSchema.safeParse(req.body)
     if(!success){
         return res.status(411).json({
-            msg: "Enter valid input."
+            msg:"Enter valid input."
         })
     }
 
-    const exists = await Users.findOne({
-        username: req.body.username,
-        password: req.body.password
-    })
+    const exists = await Users.findOne(req.body)
 
     if(exists){
-        const usernameToken = jwt.sign({
-            userID: exists._id
-        }, JWT_PASS)
-        
-        res.status(200).json({
-            msg:"Signed in succesfully.",
-            usernameToken
+        const idToken = jwt.sign({userID: exists._id}, jwtPass)
+
+        return res.status(200).json({
+            msg: "Signed in successfully.",
+            idToken
         })
-        return;
     }
-    
-    res.status(411).json({
-        msg: "Couldn't find user."
+
+    return res.status(411).json({
+        msg:"Couldn't find user."
     })
 })
 
 
-router.get('/authentication', authMiddleware, async (req, res)=>{
-    const found = await Users.findOne({_id: req.userID})
+// update data zod schema
+const updateSchema = z.object({
+    firstName: z.string().optional(),
+    lastName: z.string().optional(),
+    password: z.string().optional()
+})
+
+router.put('/', authMiddleware, (req, res)=>{
+    const {success} = updateSchema.safeParse(req.body)
+    if(!success){
+        return res.status(411).json({
+            msg: "Invalid inputs."
+        })
+    }
     
-    res.json({
-        found
+    Users.updateOne({
+        _id: req.userID
+    }, req.body)
+    .then(()=>{
+        res.status(200).json({
+            msg: "Updated successfully."
+        })
     })
-} )
+    .catch(()=>{
+        res.status(411).json({
+            msg: "Error while updating."
+        })
+    })
+    
+})
+
+
+
 
 module.exports = router
