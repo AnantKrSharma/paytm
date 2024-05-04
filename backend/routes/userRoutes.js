@@ -95,12 +95,13 @@ const updateSchema = z.object({
 
 router.put('/', authMiddleware, (req, res)=>{
     const {success} = updateSchema.safeParse(req.body)
+
     if(!success){
         return res.status(411).json({
-            msg: "Invalid inputs."
+            msg: "Enter valid input."
         })
     }
-    
+
     Users.updateOne({
         _id: req.userID
     }, req.body)
@@ -114,10 +115,7 @@ router.put('/', authMiddleware, (req, res)=>{
             msg: "Error while updating."
         })
     })
-    
 })
-
-
 
 
 module.exports = router
