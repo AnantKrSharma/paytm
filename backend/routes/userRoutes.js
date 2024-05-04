@@ -1,11 +1,10 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
-const jwtPass = require('../config')
 const z = require('zod');
 const router = express.Router();
+const jwtPass = require('../config')
 
 const { Users } = require('../database/db');
-const JWT_PASS = require('../config');
 const authMiddleware = require('../middlewares/auth')
 
 
@@ -116,6 +115,34 @@ router.put('/', authMiddleware, (req, res)=>{
         })
     })
 })
+
+
+router.get('/bulk', authMiddleware, async (req, res)=>{
+    const filter = req.query.filter || ""
+
+    const filtered = await Users.find({
+        $or: [{
+            firstName: {
+                $regex: filter
+            }
+        },
+        {
+            lastName: {
+                $regex: filter
+            }
+        }]
+    })
+
+    res.status(200).json({
+        users: filtered.map((item)=> ({   //implicit return
+            _id: item._id,
+            firstName: item.firstName,
+            lastName: item.lastName
+        }))
+    })
+})
+
+
 
 
 module.exports = router
