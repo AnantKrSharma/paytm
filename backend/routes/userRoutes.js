@@ -4,11 +4,11 @@ const z = require('zod');
 const router = express.Router();
 const jwtPass = require('../config')
 
-const { Users } = require('../database/db');
+const { Users, Account } = require('../database/db');
 const authMiddleware = require('../middlewares/auth')
 
 
-//zod sign-up schema
+// sign-up zod schema
 const signupSchema = z.object({
     username: z.string().email(),
     firstName: z.string(),
@@ -54,7 +54,7 @@ router.post('/signup', async (req, res)=>{
 })
 
 
-//zod sign-in schema
+// sign-in zod schema
 const signinSchema = z.object({
     username: z.string().email(),
     password: z.string()
@@ -117,6 +117,7 @@ router.put('/', authMiddleware, (req, res)=>{
 })
 
 
+// route to filter users on the basis of 'filter' being sent inside the query-parameter. 
 router.get('/bulk', authMiddleware, async (req, res)=>{
     const filter = req.query.filter || ""
 
