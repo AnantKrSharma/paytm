@@ -8,7 +8,9 @@ const { Account } = require('../database/db')
 // endpoint for user to get their account balance.
 router.get('/balance', authMiddleware, async (req, res)=>{  
     try{
-        const userAccount = await Account.findOne({userId: req.userID})
+        const userAccount = await Account.findOne({
+            userId: req.userID
+        })
         
         res.status(200).json({
             balance: `₹ ${userAccount.balance}`
