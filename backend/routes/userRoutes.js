@@ -35,22 +35,27 @@ router.post('/signup', async (req, res)=>{
         })
     }
 
-    Users.create(req.body)
-        .then((created)=>{  
-            const token = jwt.sign({
-                userID: created._id
-            }, jwtPass)
-            
-            res.status(200).json({
-                msg: "User created succesfully",
-                token
-            })
+    try{
+        const created = await Users.create(req.body)
+        
+        const idToken = jwt.sign({userID: created._id}, jwtPass)
+        
+        const account = await Account.create({
+            userId: created._id,
+            username: created.username, 
+            balance: Math.floor(1 + Math.random()*1000
+        )})
+        
+        res.status(200).json({
+            msg: "User created succesfully",
+            idToken
         })
-        .catch(()=>{
-            res.status(411).json({
-                msg: "Document error occured."
-            })
+    }
+    catch{
+        res.status(411).json({
+            msg: "Error while Signing-up."
         })
+    }
 })
 
 
