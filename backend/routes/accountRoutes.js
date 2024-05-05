@@ -62,7 +62,6 @@ router.post('/transfer', authMiddleware, async (req, res)=>{
         res.status(200).json({
             msg: "Transfer successful"
         });
-
     }
     catch{
         res.status(411).json({
