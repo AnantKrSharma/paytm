@@ -1,4 +1,5 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const router = express.Router()
 const z = require('zod')
 
@@ -41,40 +42,44 @@ router.post('/transfer', authMiddleware, async (req, res)=>{
     }
 
     try{
+        // transaction session in MongoDB:
+        const session = await mongoose.startSession(); 
+        session.startTransaction();
+
         const amount = req.body.amount;
 
-        const senderAccount = await Account.findOne({
-            userId: req.userID
-        })
+        const senderAccount = await Account.findOne({ userId: req.userID })
 
-        if(senderAccount.balance < amount){
+        if(!senderAccount || senderAccount.balance < amount){
+            await session.abortTransaction();  // abort
+
             return res.status(400).json({
                 msg: "Insufficient balance."
             })
         }
 
-        await Account.updateOne({
-            userId: req.userID
-         },
-         {
-            $inc:{
-                balance: -amount
-            }
-        });
+        const recieverAccount = await Account.findOne({ username: req.body.to })
 
-        await Account.updateOne({
-            username: req.body.to
-         }, 
-         {
-            $inc: {
-                balance: amount
-            }
-        });
+        if(!recieverAccount){
+            await session.abortTransaction();  // abort
 
+            return res.status(400).json({
+                msg: "Invalid account."
+            })
+        }
+
+        // transfer
+        await Account.updateOne({ userId: req.userID }, { $inc:{ balance: -amount } });
+        await Account.updateOne({ username: req.body.to }, { $inc: { balance: amount } });
+
+        // commit the transaction. 
+        await session.commitTransaction()
+        
         res.status(200).json({
             msg: "Transfer successful"
         });
     }
+
     catch{
         res.status(411).json({
             msg: "Error while transfering money."
