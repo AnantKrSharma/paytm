@@ -26,7 +26,7 @@ router.get('/balance', authMiddleware, async (req, res)=>{
 
 //zod schema for money-transfer endpoint
 const transferSchema = z.object({
-    to: z.string().email(),
+    to: z.string(),
     amount: z.number()
 }) 
 
@@ -57,7 +57,7 @@ router.post('/transfer', authMiddleware, async (req, res)=>{
             })
         }
 
-        const recieverAccount = await Account.findOne({ username: req.body.to })
+        const recieverAccount = await Account.findOne({ userId: req.body.to })
 
         if(!recieverAccount){
             await session.abortTransaction();  // abort
@@ -69,7 +69,7 @@ router.post('/transfer', authMiddleware, async (req, res)=>{
 
         // transfer
         await Account.updateOne({ userId: req.userID }, { $inc:{ balance: -amount } });
-        await Account.updateOne({ username: req.body.to }, { $inc: { balance: amount } });
+        await Account.updateOne({ userId: req.body.to }, { $inc: { balance: amount } });
 
         // commit the transaction. 
         await session.commitTransaction()
