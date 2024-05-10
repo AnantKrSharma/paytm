@@ -15,7 +15,7 @@ export default function Signup(){
                     
                     <Input label={'First Name'} type={'text'} placeholder={'Anant'}></Input>
                     <Input label={'Last Name'} type={'text'} placeholder={'Sharma'}></Input>
-                    <Input label={'Email'} type={'email'} placeholder={'anant@mail.com'}></Input>
+                    <Input label={'Email'} type={'email'} placeholder={'example@mail.com'}></Input>
                     
                     <Button inner={'Sign-Up'} ></Button>
 
