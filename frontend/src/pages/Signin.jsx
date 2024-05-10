@@ -15,8 +15,8 @@ export default function Signin(){
 
             <Subheading content={'Enter your credentials to Sign-In'}></Subheading>
 
-            <Input label={'Email'} placeholder={'example@mail.com'}></Input>
-            <Input label={'Password'} placeholder={'Enter a strong password.'}></Input>
+            <Input label={'Email'} placeholder={'example@mail.com'} type={'email'}></Input>
+            <Input label={'Password'} placeholder={'Enter a strong password.'} type={'password'}></Input>
 
             <Button inner={'Sign-In'}></Button>
 
