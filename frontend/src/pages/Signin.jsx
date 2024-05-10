@@ -18,7 +18,9 @@ export default function Signin(){
             <Input label={'Email'} placeholder={'example@mail.com'} type={'email'}></Input>
             <Input label={'Password'} placeholder={'Enter a strong password.'} type={'password'}></Input>
 
-            <Button inner={'Sign-In'}></Button>
+            <div className="m-2">
+                <Button inner={'Sign-In'}></Button>
+            </div>
 
             <BottomWarning text={"Don't have an account?"} linkText={'Sign-Up'} to={'/signup'}></BottomWarning>
 

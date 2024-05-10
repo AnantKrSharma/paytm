@@ -17,7 +17,9 @@ export default function Signup(){
                     <Input label={'Last Name'} type={'text'} placeholder={'Sharma'}></Input>
                     <Input label={'Email'} type={'email'} placeholder={'example@mail.com'}></Input>
                     
-                    <Button inner={'Sign-Up'} ></Button>
+                    <div className="m-2">
+                        <Button inner={'Sign-Up'} ></Button>
+                    </div>
 
                     <BottomWarning text={'Already have an account?'} linkText={'Sign-In'} to={'/signin'}></BottomWarning>
             
