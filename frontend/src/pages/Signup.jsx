@@ -4,10 +4,11 @@ import {Input} from '../components/Input'
 import {Button} from '../components/Button'
 import { BottomWarning } from '../components/BottomWarning'
 import { useState } from 'react'
+import axios from 'axios'
 
 export default function Signup(){
     const [firstName, setFirstName] = useState('')
-    const [lastName, setlastName] = useState('')
+    const [lastName, setLastName] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -37,7 +38,15 @@ export default function Signup(){
                     }}></Input>
                     
                     <div className="m-2">
-                        <Button inner={'Sign-Up'} ></Button>
+                        <Button inner={'Sign-Up'} onclick={()=>{
+                            axios.post('http://localhost:3000/api/v1/user/signup',
+                                {
+                                    firstName,
+                                    lastName,
+                                    username,
+                                    password
+                                })
+                        }}></Button>
                     </div>
 
                     <BottomWarning text={'Already have an account?'} linkText={'Sign-In'} to={'/signin'}></BottomWarning>
