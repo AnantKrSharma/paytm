@@ -1,4 +1,4 @@
-export function Input({label, type, placeholder}){
+export function Input({label, type, placeholder, onchange}){
     
     return <div className="flex flex-col m-2 [&>*]:m-1">
         
@@ -6,7 +6,8 @@ export function Input({label, type, placeholder}){
             {label} 
         </div>
         
-        <input type={type}  placeholder={placeholder} className="border shadow-sm p-2 rounded-md"/>
+        <input type={type}  placeholder={placeholder}
+         onChange={onchange} className="border shadow-sm p-2 rounded-md"/>
     
     </div>
 }

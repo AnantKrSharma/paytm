@@ -20,19 +20,19 @@ export default function Signup(){
 
                     <Subheading content={"Enter your details to create an account."}></Subheading>
                     
-                    <Input label={'First Name'} type={'text'} placeholder={'Anant'} onclick={(e)=>{
+                    <Input label={'First Name'} type={'text'} placeholder={'Anant'} onchange={(e)=>{
                         setFirstName(e.target.value)
                     }}></Input>
                     
-                    <Input label={'Last Name'} type={'text'} placeholder={'Sharma'} onclick={(e)=>{
+                    <Input label={'Last Name'} type={'text'} placeholder={'Sharma'} onchange={(e)=>{
                         setLastName(e.target.value)
                     }}></Input>
                     
-                    <Input label={'Email'} type={'email'} placeholder={'example@mail.com'} onclick={(e)=>{
+                    <Input label={'Email'} type={'email'} placeholder={'example@mail.com'} onchange={(e)=>{
                         setUsername(e.target.value)
                     }}></Input>
 
-                    <Input label={'Password'} type={'password'} placeholder={'example@mail.com'} onclick={(e)=>{
+                    <Input label={'Password'} type={'password'} placeholder={'example@mail.com'} onchange={(e)=>{
                         setPassword(e.target.value)
                     }}></Input>
                     
