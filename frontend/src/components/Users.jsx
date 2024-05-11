@@ -16,7 +16,7 @@ export function Users(){
         }
     ])
 
-    return <div className="flex-col border-0 border-neutral-300 m-2 p-1 shadow rounded-lg bg-slate-100">
+    return <div className="flex-col border-0 border-neutral-300 m-4 p-1 shadow rounded-lg bg-slate-100">
         
         <div className="font-bold text-xl mx-2 border w-fit p-1 rounded-md shadow-md">
             Users

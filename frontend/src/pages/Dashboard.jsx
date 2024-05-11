@@ -4,7 +4,7 @@ import { Users } from "../components/Users"
 
 export default function Dashboard(){
     
-    return <div className="overflow-hidden bg-gradient-to-r from-blue-300 to-cyan-200 h-screen">
+    return <div className="overflow-hidden bg-gradient-to-r from-indigo-600 to-violet-900 h-screen">
         
         <div className="">
 

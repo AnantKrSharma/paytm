@@ -1,7 +1,7 @@
 
 export function Balance({balance}){
     
-    return <div className="flex [&>*]:m-1 border shadow mx-2 mb-4 p-2 rounded-lg bg-slate-100">
+    return <div className="flex [&>*]:m-1 border shadow mx-4 mb-4 p-2 rounded-lg bg-slate-100">
     
         <div className="font-bold border shadow-sm p-2 rounded-md">
             Your Balance - 
