@@ -4,16 +4,19 @@ const router = express.Router()
 const z = require('zod')
 
 const authMiddleware = require('../middlewares/auth')
-const { Account } = require('../database/db')
+const { Account, Users } = require('../database/db')
 
 
 // endpoint for user to get their account balance.
 router.get('/balance', authMiddleware, async (req, res)=>{  
     try{
+        const user = await Users.findOne({_id: req.userID})
         const userAccount = await Account.findOne({ userId: req.userID })
         
         res.status(200).json({
-            balance: `₹ ${userAccount.balance}`
+            balance: `₹ ${userAccount.balance}`,
+            firstName: user.firstName,
+            lastName: user.lastName
         })
     }
     catch{

@@ -38,15 +38,21 @@ export default function Signup(){
                     }}></Input>
                     
                     <div className="m-2">
-                        <Button inner={'Sign-Up'} onclick={()=>{
-                            axios.post('http://localhost:3000/api/v1/user/signup',
+                        
+                        <Button inner={'Sign-Up'} onclick={async ()=>{
+                            const res = await axios.post('http://localhost:3000/api/v1/user/signup',
                                 {
                                     firstName,
                                     lastName,
                                     username,
                                     password
-                                })
+                                });
+
+                            console.log(res.data);
+                            localStorage.setItem('token', res.data.idToken)
+
                         }}></Button>
+                    
                     </div>
 
                     <BottomWarning text={'Already have an account?'} linkText={'Sign-In'} to={'/signin'}></BottomWarning>

@@ -139,12 +139,14 @@ router.get('/bulk', authMiddleware, async (req, res)=>{
         }]
     })
 
+    const response = filtered.filter(item => item._id != req.userID).map((item)=> ({
+        _id: item._id,
+        firstName: item.firstName,
+        lastName: item.lastName
+    }))
+
     res.status(200).json({
-        users: filtered.map((item)=> ({   //implicit return
-            _id: item._id,
-            firstName: item.firstName,
-            lastName: item.lastName
-        }))
+        users: response
     })
 })
 
