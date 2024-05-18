@@ -1,5 +1,5 @@
 
-export function Button({inner, onclick}){
+export function Button({inner, onclick, Ref}){
 
     return <div className="flex justify-center items-center m-2 border-blue-700 p-0 border-0 rounded-md shadow-md">
        

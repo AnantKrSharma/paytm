@@ -5,12 +5,15 @@ import { Button } from "../components/Button"
 import { BottomWarning } from "../components/BottomWarning"
 import { useState } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 
 export default function Signin(){
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+
+    const navigate = useNavigate();
     
     return <div className="flex justify-center items-center bg-neutral-500 h-screen">
 
@@ -35,9 +38,11 @@ export default function Signin(){
                                         username,
                                         password
                                     })
+                    
                     console.log(res.data);
                     localStorage.setItem('token', res.data.idToken)
-
+                    
+                    navigate('/dashboard')
                 }}></Button>
             </div>
 

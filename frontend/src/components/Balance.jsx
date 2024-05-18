@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 
-export function Balance({balance}){
+export function Balance(){
     
     const [currentUser, setCurrentUser] = useState('')
     const [currentBalance, setCurrentBalance] = useState('')
@@ -9,7 +9,7 @@ export function Balance({balance}){
     useEffect(()=>{
         axios.get('http://localhost:3000/api/v1/account/balance', {
             headers:{
-                'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NjQ3ODlhZWE4YmZkZjAxMjg0YTI0MGYiLCJpYXQiOjE3MTU5NjU1NzN9.11azbHGJFSjZHLCUlgzCZpJZ1zRiPLj65K8BgJi20cI"
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         }).then((res)=>{
             const name = `${res.data.firstName} ${res.data.lastName}`

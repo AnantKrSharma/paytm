@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Input } from "./Input"
 import { Button } from "./Button"
 import axios from "axios"
+import { Navigate, useNavigate } from "react-router-dom"
 
 export function Users(){
     const [users, setUsers] = useState([])
@@ -10,14 +11,14 @@ export function Users(){
     useEffect(()=>{
         axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${filterInput}`,{
             headers:{
-                'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NjQ3ODlhZWE4YmZkZjAxMjg0YTI0MGYiLCJpYXQiOjE3MTU5NjU1NzN9.11azbHGJFSjZHLCUlgzCZpJZ1zRiPLj65K8BgJi20cI"
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         }).then(res=>{
             setUsers(res.data.users)
         })
-    }, [users])
+    }, [filterInput])
 
-    return <div className="flex-col border-0 border-neutral-300 m-4 p-1 shadow rounded-lg bg-slate-100">
+    return <div className="flex-col border m-4 p-1 shadow rounded-lg bg-slate-100">
         
         <div className="font-semibold text-2xl m-3 border w-fit p-1 rounded-md shadow">
             Users
@@ -35,6 +36,8 @@ export function Users(){
 }
 
 function User({account}){
+    const navigate = useNavigate();
+
     return <div className="flex justify-between p-1 m-2">
 
                 <div className="flex items-center [&>*]:m-1 [&>*]:p-1 border-0 rounded-lg shadow">
@@ -46,7 +49,9 @@ function User({account}){
                 </div>
 
                 <div className="p-0">
-                    <Button inner={'Send Money'}></Button>
+                    <Button inner={'Send Money'} onclick={()=>{
+                        navigate(`/send?id=${account._id}&name=${account.firstName}`);
+                    }}></Button>
                 </div>
 
     </div>
