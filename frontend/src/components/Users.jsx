@@ -9,7 +9,7 @@ export function Users(){
     const [filterInput, setFilterInput] = useState('')
 
     useEffect(()=>{
-        axios.get(`http://localhost:3000/api/v1/user/bulk?filter=${filterInput}`,{
+        axios.get(`https://paytm-two-theta.vercel.app/api/v1/user/bulk?filter=${filterInput}`,{
             headers:{
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }

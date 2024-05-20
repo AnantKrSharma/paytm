@@ -5,12 +5,24 @@ const app = express();
 const mainRouter = require('./routes/main')
 
 app.use(express.json());
-app.use(cors({
-    origin: ["https://deploy-mern-1whq.vercel.app"],
-    methods: ["POST", "GET"],
-    credentials: true
-}))
 
+const allowedOrigins = ['https://deploy-mern-1whq.vercel.app', 'http://localhost:5173'];
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ['POST', 'GET', 'OPTIONS'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Handle preflight requests
+app.options('*', cors());
 app.use('/api/v1', mainRouter)
 
 app.listen(3000, ()=>{

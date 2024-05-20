@@ -38,7 +38,7 @@ export default function SendMoney(){
             
             <div className="m-4 flex justify-center items-center ">
                 <button className="p-2 font-semibold rounded-md bg-green-500 text-white transform transition-transform hover:scale-105" onClick={async ()=>{
-                    await axios.post('http://localhost:3000/api/v1/account/transfer'
+                    await axios.post('https://paytm-two-theta.vercel.app/api/v1/account/transfer'
                         ,{
                             to: id,
                             amount: amount

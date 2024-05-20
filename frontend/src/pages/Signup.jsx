@@ -42,7 +42,7 @@ export default function Signup(){
                     <div className="m-2">
                         
                         <Button inner={'Sign-Up'} onclick={async ()=>{
-                            const res = await axios.post('http://localhost:3000/api/v1/user/signup',
+                            const res = await axios.post('https://paytm-two-theta.vercel.app/api/v1/user/signup',
                                 {
                                     firstName,
                                     lastName,
