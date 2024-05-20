@@ -123,7 +123,7 @@ router.put('/', authMiddleware, (req, res)=>{
 
 
 // route to filter users on the basis of 'filter' being sent inside the query-parameter. 
-router.get('/bulk', authMiddleware, async (req, res)=>{
+router.get('/bulk',  async (req, res)=>{
     const filter = req.query.filter || ""
 
     const filtered = await Users.find({
