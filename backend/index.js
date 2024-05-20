@@ -6,7 +6,7 @@ const mainRouter = require('./routes/main')
 
 app.use(express.json());
 
-const allowedOrigins = ['https://deploy-mern-1whq.vercel.app', 'http://localhost:5173', 'https://paytm-app-six.vercel.app/'];
+const allowedOrigins = ['https://deploy-mern-1whq.vercel.app', 'http://localhost:5173'];
 
 app.use(cors({
     origin: (origin, callback) => {
