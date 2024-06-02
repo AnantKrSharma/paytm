@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const jwtPass = require('../config')
 
+
 const authMiddleware = (req, res, next) =>{
     const authHeader = req.headers.authorization
     
